@@ -10,7 +10,10 @@ namespace Projekt_PO
         Gotowe,
         Zrealizowane
     }
-
+    public interface IStrategiaWyceny
+    {
+        double ObliczCene(List<PozycjaMenu> pozycje);
+    }
     public abstract class PozycjaMenu
     {
         private string nazwa;
@@ -61,7 +64,53 @@ namespace Projekt_PO
             throw new NotImplementedException();
         }
     }
+    public class WyjatekZamowienia : Exception
+    {
+        public WyjatekZamowienia(string message) : base(message)
+        {
+        }
+    }
 
+    public class WyjatekPustegoZamowienia : WyjatekZamowienia
+    {
+        public WyjatekPustegoZamowienia(string message) : base(message)
+        {
+        }
+    }
+
+    public class Zamowienie
+    {
+        private List<PozycjaMenu> pozycje;
+        private StatusZamowienia status;
+        private IStrategiaWyceny strategiaWyceny;
+
+        public Zamowienie(IStrategiaWyceny strategia)
+        {
+            pozycje = new List<PozycjaMenu>();
+            status = StatusZamowienia.Nowe;
+            strategiaWyceny = strategia;
+        }
+
+        public void DodajPozycje(PozycjaMenu pozycja)
+        {
+            throw new NotImplementedException();
+        }
+
+        public double ObliczSume()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ZmienStatus(StatusZamowienia nowyStatus)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static Zamowienie operator +(Zamowienie zamowienie, PozycjaMenu pozycja)
+        {
+            throw new NotImplementedException();
+        }
+    }
     public class ZarzadcaRestauracji
     {
         private List<PozycjaMenu> dostepneMenu;
