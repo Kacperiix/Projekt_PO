@@ -14,6 +14,46 @@ namespace Projekt_PO
     {
         double ObliczCene(List<PozycjaMenu> pozycje);
     }
+    public class CennikStandardowy : IStrategiaWyceny
+{
+    public double ObliczCene(List<PozycjaMenu> pozycje)
+    {
+        double suma = 0;
+        foreach (var pozycja in pozycje)
+        {
+            suma += pozycja.CenaBazowa;
+        }
+        return suma;
+    }
+}
+public class CennikZestawow : IStrategiaWyceny
+{
+    public double ObliczCene(List<PozycjaMenu> pozycje)
+    {
+        double suma = 0;
+        bool maDanie = false;
+        bool maNapoj = false;
+
+        foreach (var pozycja in pozycje)
+        {
+            suma += pozycja.CenaBazowa;
+            
+            if (pozycja is Danie)
+            {
+                maDanie = true;
+            }
+            else if (pozycja is Napoj)
+            {
+                maNapoj = true;
+            }
+        }
+        if (maDanie && maNapoj)
+        {
+            return suma * 0.8;
+        }
+        return suma;
+    }
+}
     public abstract class PozycjaMenu
     {
         private string nazwa;
